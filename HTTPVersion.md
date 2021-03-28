@@ -79,7 +79,7 @@
     - 읽을 수도, 직접 만들 수도 없음
 - 병렬 요청이 동일한 커넥션 상에서 다루어질 수 있는 다중화 프로토콜
 
-![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/d693fb88-a9f6-4c4a-a562-d809effd4355/Untitled.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/d693fb88-a9f6-4c4a-a562-d809effd4355/Untitled.png)
+![http 2.0](static/http_2_0.png)
 
 - **전송된 데이터의 분명한 중복과 그로 인한 오버헤드를 제거하여 연속된 요청 사이의 유사한 내용의 헤더를 압축시킴**
 - 사전에 클라이언트 캐시를 서버 푸쉬라고 불리는 메커니즘에 의해 필요하게 될 데이터로 채워넣을 수 있도록 함

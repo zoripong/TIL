@@ -72,7 +72,7 @@ DB 커넥션 개수가 제한적이기 때문에, 트랜잭션의 범위는 최�
 
 ## 수평 파티셔닝 (= 샤딩)
 
-![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/5d4875a0-c6f3-49a1-a9d5-aa32f6b8f73a/Untitled.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/5d4875a0-c6f3-49a1-a9d5-aa32f6b8f73a/Untitled.png)
+![horizontal partitioning](static/horizontal_partitioning.png)
 
 - 동일한 스키마를 가진 테이블을 여러개로 복제
 - 각각의 샤드에 어떤 데이터가 저장될지를 샤드키를 기준으로 분리 한다.
@@ -80,7 +80,7 @@ DB 커넥션 개수가 제한적이기 때문에, 트랜잭션의 범위는 최�
 
 ## 수직 파티셔닝
 
-![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/259ab1a5-c397-417a-8628-cb4353416d02/Untitled.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/259ab1a5-c397-417a-8628-cb4353416d02/Untitled.png)
+![vertical partitioning](static/vertical_partitioning.png)
 
 - 하나의 테이블에 저장된 데이터들을 여러 테이블로 분리하는 것
 
@@ -134,7 +134,7 @@ AWS에서 mysql, postresql 을 호환해서 만든 RDBMS
 
 ## RDS vs Aurora
 
-![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/d2d773e2-5b6f-45bc-b3c2-85fab1f444ba/Untitled.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/d2d773e2-5b6f-45bc-b3c2-85fab1f444ba/Untitled.png)
+![aurora](static/aurora.png)
 
 - 스토리지
     - rds의 경우 EBS로 데이터를 쌓고 미러링하여 replica에 복제

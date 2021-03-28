@@ -69,9 +69,9 @@ ex) k8s 에서 replica 수를 늘리는 것 or HPA
 
 ## L4 로드밸런서와 L7로드밸런서
 
-![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/ee0b9284-4d52-4f95-b436-eb56103f64fc/Untitled.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/ee0b9284-4d52-4f95-b436-eb56103f64fc/Untitled.png)
+![L4 Loadbalancer](static/l4_lb.png)
 
-![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/ba2c0ba5-925b-40dd-8319-a7ca040df054/Untitled.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/ba2c0ba5-925b-40dd-8319-a7ca040df054/Untitled.png)
+![L7 Loadbalancer](static/l7_lb.png)
 
 L4부터 포트를 바탕으로 로드를 분산하는 것이 가능해서 L4 로드밸런서와 L7 로드밸런서가 가장 많이 사용됨
 
@@ -81,7 +81,7 @@ L4 로드밸런서는 네트워크 계층(IP)나 트랜스포트 계층 (TCP, UD
 
 L7 로드밸런서의 경우 애플리케이션 계층 (HTTP, FTP, SMTP)에서 로드를 분산하기 때문에 헤더, 쿠키 등과 같은 사용자의 요청을 기준으로 특정 서버에 트래픽 분산을 할 수 있음 (패킷 내용을 확인)
 
-![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/411de716-354a-4679-9b6b-3106d7b1fd6f/Untitled.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/411de716-354a-4679-9b6b-3106d7b1fd6f/Untitled.png)
+![L4 vs L7](static/l4_vs_l7.png)
 
 # 캐싱
 

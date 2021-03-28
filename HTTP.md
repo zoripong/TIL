@@ -26,7 +26,7 @@
 
 # UDP vs TCP
 
-![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/b12fdc3d-83e3-40ff-8117-fc9b567e6e5c/Untitled.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/b12fdc3d-83e3-40ff-8117-fc9b567e6e5c/Untitled.png)
+![udp vs tcp](static/udp_vs_tcp.png)
 
 # HTTP 버전별 차이
 

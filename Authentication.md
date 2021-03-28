@@ -55,16 +55,10 @@ httpOnly 속성을 활성화 후 쿠키에 토큰을 담아 전달하는 방법
   - HTTP 요청 레퍼러 체크, CSRF 토큰을 이용하여 방지 가능
 
 
-
 ## Reference
 
 - https://backend-intro.vlpt.us/4/
 - https://velopert.com/2350
 - https://itstory.tk/entry/CSRF-%EA%B3%B5%EA%B2%A9%EC%9D%B4%EB%9E%80-%EA%B7%B8%EB%A6%AC%EA%B3%A0-CSRF-%EB%B0%A9%EC%96%B4-%EB%B0%A9%EB%B2%95
 
-
-## 작성일
-- 2020-07-24
-
 [1]: (https://tools.ietf.org/html/rfc7519)
-

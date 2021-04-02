@@ -38,3 +38,24 @@
 ## call-by-reference
 
 함수 호출 시 매개변수로 변수의 주소가 넘어가는 방식
+
+## String vs StringBuffer vs StringBuilder
+
+### String
+
+- Immutable
+- 문자열 변경시 Heap 메모리에 가비지가 많이 생성되기 때문에 성능에 안 좋은 영향을 끼친다.
+- 멀티쓰레드 환경에서 안정성을 가지고 있음
+
+### StringBuffer
+
+- mutable
+- 문자열 변경시 동일 객체내에서 수정하기 때문에 가비지가 생기지 않음
+- 멀티쓰레드 환경에서 안정성을 가지고 있음
+
+### StringBuilder
+
+- mutable
+- 문자열 변경시 동일 객체내에서 수정하기 때문에 가비지가 생기지 않음
+- 멀티쓰레드에서 안전하지 않음
+- 싱글쓰레드에서는 StringBuffer보다 성능이 뛰어남

@@ -1,5 +1,8 @@
 # OAuth2.0
 
+## OAuth2.0?
+제 3의 앱이 자원의 소유자인 서비스 이용자를 대신하여 서비스를 요청할 수 있도록 자원 접근 권한을 위임하는 방법
+
 ## Role
 
 - resource owner
@@ -38,12 +41,19 @@ e.g.) 페이스북 인증 서버
 
   resource owner를 권한 부여코드와 함께 client로 되돌려 보내기 전에 인증서버는 resource owner를 인증하고 인증을 받는다.
   resource owner는 오직 인증서버로만 인증되므로 resource owner의 credential은 client와 절대 공유 되지 않는다.
+  resource owner로 부터 권한 부여코드를 발급받은 client는 권한 부여코드를 이용하여 authorization server로 부터 access token을 발급받는다.
+  인증이 완료되었으며, 이제 resource server로부터 데이터를 받아와야하는 경우 client는 이전에 발급받았던 access token을 이용하여 데이터를 받아온다.
 
   `authorization code`는 클라이언트 인증 기능 및 액세스 토큰을 리소스 소유자의 사용자 에이전트를 통해 전달하지 않고 클라이언트로 직접 전송하여 잠재적으로 리소스 소유자를 비롯한 다른 사용자에게 노출하는 등의 몇 가지 중요한 보안 이점을 제공합니다.
 
   ### PKCE
   - 코드를 발급 받기 위해 요청할 때 특정 시크릿 키와 함께 요청하고, 코드를 엑세스 토큰으로 교환할 때에도 동일한 시크릿 키로 함께 요청하는 방법
   - 코드가 탈취되어 다른 사람이 엑세스토큰을 발급받을 수 없도록 함
+
+  ### redirect uri 검증
+  - 로그인 후 client로 돌아가는 redirect uri에 대한 검증이 제대로 되지 않은 경우 공격자의 서버로 리다이렉트되어 권한 부여코드가 공격자 서버로 넘어가게 된다.
+  - 이렇게 되면, 공격자는 권한 부여코드를 이용하여 access token 발급 및 리소스 이용이 가능해진다.
+  - 도메인만 검증하는 것이 아닌, 전체 path까지 검증해야한다.
 
 1. Implicit
 
@@ -87,6 +97,3 @@ e.g.) 페이스북 인증 서버
 
 - https://tools.ietf.org/html/rfc6749
 - http://www.bubblecode.net/en/2016/01/22/understanding-oauth2/
-
-## 작성일
-- 2020-08-16

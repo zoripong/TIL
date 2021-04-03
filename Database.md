@@ -122,6 +122,44 @@ DB 커넥션 개수가 제한적이기 때문에, 트랜잭션의 범위는 최�
 - Isolation (고립성): 각 트랜잭션은 서로 간섭없이 독립적으로 수행
 - Durability (지속성): 트랜잭션이 정상적으로 종료된 후 영구적으로 DB에 결과가 저장되어야 함
 
+## 트랜잭션의 격리 수준
+### 필요성
+- 하나의 트랜잭션이 동작 중일 때에 다른 트랜잭션이 관여할 수 없도록 막는 Locking 개념이 등장
+- 무조건적인 Locking은 많은 트랜잭션들을 순차적으로 처리하게 되며 DB 성능을 떨어뜨림
+- 반대로 응답성을 높이기 위해 Locking 범위를 줄이게 되면 잘못된 값이 처리될 여지가 생김
+- 최대한 효율적인 locking 방법이 필요
+
+### 격리 수준의 종류
+
+#### READ UNCOMMITTED (Level 0)
+- 각 트랜잭션의 변경 내용의 commit/rollback 여부와 관계 없이 다른 트랜잭션에서도 값을 읽을 수 있다.
+- 정합성에 문제가 많아 사용하지 않는 것을 권장
+- update 후 commit되지 않은 값을 다른 트랜잭션에서 읽을 수 있다.
+
+#### READ COMMITTED (Level 1)
+- 대부분의 RDB에서 기본적으로 사용하고 있는 격리 수준
+    - PostgreSQL 역시 해당 격리 수준을 이용하고 있음
+- Level 0의 Dirty Read와 같은 문제가 발생하지 않는다.
+    - Dirty Read: 트랜잭션 작업이 완료되지 않았는데 다른 트랜잭션에서 볼 수 있게 되는 것 
+- 실제 테이블 값이 아닌 Undo 영역의 백업된 레코드에서 값을 가져온다.
+- 하나의 트랜잭션에서 똑같은 Select 쿼리를 했을 때 항상 같은 값을 가져와야 하는 REPEATABLE READ의 정합성에서 어긋난다.
+
+#### REPEATABLE READ (Level 2)
+- MySQL의 경우 트랜잭션마다 트랜잭션 ID를 부여하여 해당 ID보다 작은 트랜잭션 번호에서 변경된 것만 읽게 한다.
+- Non-Repeatable Read가 발생하지 않음
+    - Non-Repeatable Read: 한 트랜잭션에서 같은 쿼리를 두 번 수행할 때, 두 쿼리의 결과가 상이하게 나타나는 비일관성 현상
+- UNDO 공간에 백업해두고 실제 레코드 값은 변경하며, 변경 전에 만들어진 트랜잭션에서는 UNDO 공간에 백업된 데이터를 가져온다.
+    - 백언된 데이터는 불필요시 주기적으로 삭제하며, 백업 레코드가 많아지면 성능 저하가 찾아올 수 있다.
+- 이러한 업데이트 방식을 MVCC (Mutli Version Concurrency Control)라고 부른다.
+
+#### Serializable (Level 3)
+- 가장 단순하지만 가장 엄격한 격리 수준으로 동시 처리 성능이 가장 낮다.
+- Phantom Read가 발생하지 않음
+    - Phantom Read: 한 트랜잭션에서 같은 쿼리를 두 번 수행할 때, 첫 번째 쿼리에서 없던 레코드가 두 번째 쿼리에서 나타나는 현상
+- 트랜잭션이 완료될 때까지 SELECT 문장이 사용하는 모든 데이터에 Shared Lock이 걸리는 Level
+- 완벽한 읽기 일관성 모드를 제공한다.
+
+
 # 파티셔닝
 
 퍼포먼스, 가용성, 정비용이성을 목적으로 논리적인 데이터를 다수의 테이블로 쪼개는 행위
@@ -210,3 +248,4 @@ AWS에서 mysql, postresql 을 호환해서 만든 RDBMS
 - [https://mangkyu.tistory.com/97](https://mangkyu.tistory.com/97)
 - [https://nesoy.github.io/articles/2018-02/Database-Replication](https://nesoy.github.io/articles/2018-02/Database-Replication)
 - [http://theeye.pe.kr/archives/1917](http://theeye.pe.kr/archives/1917)
+- [https://medium.com/@sunnkis/database-%ED%8A%B8%EB%9E%9C%EC%9E%AD%EC%85%98%EC%9D%98-%EA%B2%A9%EB%A6%AC-%EC%88%98%EC%A4%80%EC%9D%B4%EB%9E%80-10224b7b7c0e](https://medium.com/@sunnkis/database-%ED%8A%B8%EB%9E%9C%EC%9E%AD%EC%85%98%EC%9D%98-%EA%B2%A9%EB%A6%AC-%EC%88%98%EC%A4%80%EC%9D%B4%EB%9E%80-10224b7b7c0e)

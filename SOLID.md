@@ -15,12 +15,12 @@
 - 자식 클래스는 부모클래스의 책임을 무시하거나 재정의하지 않고 확장만 수행해야 만족시킬 수 있다.
 - 자식과 부모가 is-a 관계가 아니라면 composition을 이용해라
 
-# Interface Segregation Principle
+# Interface Segregation Principle (인터페이스 분리 원칙)
 
 - 한 클래스는 자신이 사용하지않는 인터페이스는 구현하지 말아야 한다.
 - 하나의 일반적인 인터페이스보다 여러개의 구체적인 인터페이스가 낫다.
 
-# Dependency Inversion Principle
+# Dependency Inversion Principle (의존 관계 역전 원칙)
 
 - 의존 관계를 맺을 때 변화하기 어려운 것에 의존하라는 것
 - 구체적인 클래스보다 인터페이스나 추상 클래스에 의존하는 것

@@ -38,3 +38,16 @@
 
 ## 참고
 https://velog.io/@litien/%EA%B0%80%EB%B9%84%EC%A7%80-%EC%BB%AC%EB%A0%89%ED%84%B0GC#minor-gc-%EC%99%80-major-gc
+
+# 파이썬에서의 GC
+- 아래 두 가지 사용
+  - reference counting
+    - 객체에 참조하고 있는 수를 카운팅
+    - 객체 순환참조시 해제 되지 않는 단점이 있음
+  - generational garbage collector
+    - 세대와 임계값을 가지고 있음
+    - 0세대 (young)에서 시작해서 임계값을 넘어가면 1세대, 2세대로 넘김
+      - 만들어진지 얼마 안 되었을 수록 해제될 확률이 크다
+    - 객체 순환참조 문제만 해결하고 나머지는 Reference counting을 통해서 해결함
+    - gc module을 이용하여 설정을 변경할 수 있음
+

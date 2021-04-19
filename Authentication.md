@@ -49,7 +49,7 @@ local storage 혹은 session storage 에 저장 후 API 요청시 HTTP 헤더에
 httpOnly 속성을 활성화 후 쿠키에 토큰을 담아 전달하는 방법
 쿠키를 토큰의 전송 수단으로 사용하며, httpOnly 속성에 의해 네트워크 통신 상에서만 토큰 정보가 포함 되어 있게 됨
 
-- +) XSS 공격 위험이 없음
+- +) httpOnly 속성을 이용하면 XSS 공격 위험이 없음
 - -) 한정된 도메인에서만 사용이 가능해짐
 - -) CSRF(Cross Site Request Forgery) 공격에 의해 사용자가 의도치 않은 요청을 할 가능성이 있음
   - HTTP 요청 레퍼러 체크, CSRF 토큰을 이용하여 방지 가능

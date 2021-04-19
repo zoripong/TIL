@@ -47,7 +47,7 @@
 - 원하든 원치 않든 P는 선택되어야 하며 결국 선택권은 C나 A중 하나밖에 없다.
     - 애초에 P는 네트워크 장애가 있을 수 있다는 것을 인정하느냐의 문제이고 이는 인정 할 수밖에 없는 문제이므로 처음부터 선택되어있는 것이다.
 
-    ![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/d13f8be8-8ac9-4ba0-8058-5f44b7d14008/Untitled.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/d13f8be8-8ac9-4ba0-8058-5f44b7d14008/Untitled.png)
+![pacelc.png](static/pacelc.png)
 
 ## PACELC 이론
 

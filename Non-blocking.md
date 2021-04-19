@@ -13,11 +13,11 @@
 # Blocking vs Non-Blocking
 
 - synchronous와 asynchronous와 관점이 다르다.
-- blocing, non-blocking은 직접 제이할 수 없는 대상을 처리하는 방법에 따라 나눈다.
+- blocking, non-blocking은 직접 제어할 수 없는 대상을 처리하는 방법에 따라 나눈다.
 
 ## Blocking I/O Model
 
-![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/66e96481-577f-485e-8247-cc9e0fc9d2fb/Untitled.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/66e96481-577f-485e-8247-cc9e0fc9d2fb/Untitled.png)
+![blocking.png](static/blocking.png)
 
 - I/O 작업은 application 레벨에서 수행할 수 없고 Kernel Level (OS)에서 일어난다.
     - application은 커널에게 I/O 작업을 요청해야 한다. (System Call)
@@ -42,7 +42,7 @@
 
 ## Spring MVC?
 
-![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/3a5fbcd9-4f53-4356-a758-5f91fe070358/Untitled.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/3a5fbcd9-4f53-4356-a758-5f91fe070358/Untitled.png)
+![spring_mvc.png](static/spring_mvc.png)
 
 - servelet stack
 - 지금 세팅 되어있는 코드
@@ -52,7 +52,7 @@
 
 ## Spring Webflux?
 
-![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/de2fc770-6cf5-4c4d-a498-adfb84f5cdf0/Untitled.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/de2fc770-6cf5-4c4d-a498-adfb84f5cdf0/Untitled.png)
+![event_loop.png](static/event_loop.png)
 
 - Event driven 방식
 - Node.js처럼 이벤트 루프가 돌고 요청이 발생한 경우 그것에 맞는 핸들러에게 처리를 위임하고 처리가 완료되면 callback 메소드 등을 통해 응답을 반환 — non-blocking
@@ -80,7 +80,7 @@
 
 ## MVC vs WebFlux
 
-![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/181a9f8c-cc7a-43c1-b1e6-ab0307fdd1ab/Untitled.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/181a9f8c-cc7a-43c1-b1e6-ab0307fdd1ab/Untitled.png)
+![MVC_vs_Webflux.png](static/MVC_vs_Webflux.png)
 
 boot1 - MVC / boot2 - WebFlux
 

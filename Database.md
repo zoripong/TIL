@@ -3,39 +3,102 @@
 ## index?
 
 - 색인, DB가 데이터를 빠르게 찾을 수 있도록 컬럼의 값과 해당 레코드가 저장된 주소를 쌍으로 인덱스를 만들어둔다.
-- Index가 있으면 FULL SCAN을 해서 조회해오던 것을 ROOT-BRANCH-LEAF-DATA BLOCK 4번의 IO를 통해 접근가능하다.
+- Index가 있으면 FULL SCAN을 해서 조회해오던 것을 O(log N) 으로 가져올 수 있게된다.
 
-### 자료구조
+## 자료구조
 
 - B-Tree
     - 일반적으로 사용되는 알고리즘
     - 컬럼의 값을 변형하지 않고 원래의 값을 이용해 트리구조로 인덱싱한다.
     - 디스크 I/O를 고려하여 깊이를 줄일 수 있는 B-Tree 구조 이용
+    - 한 쪽으로 데이터가 몰리지 않아서 최악의 경우에도 검색이 빠르다.
     - Root Block - Branch Block - Leaf Block 으로 계층이 나뉜다.
     - key와 관련된 정보를 node에 저장한다. 리프 노드를 읽기 전 원하는 값을 찾을 수 있다.
     - 탐색 과정
         - root block을 찾는다.
         - 찾는 값이 branch block에서 가장 왼쪽 값보다 작으면 왼쪽 포인터, 사이에 있으면 중간 포인터, 더 크면 오른쪽 포인터로 찾아간다.
         - 이 과정을 통해 leaf block을 찾고 그 안에서 찾고자 하는 값이 있는지 확인한다.
-    - (B+-Tree는 관련정보는 모두 리프 노드에 저장되고 key와 child pointer만 internal node에 저장된다. 임의접근, 순차접근에 우수하며 탐색시 항상 루트노드부터 탐색한다.)
-
+    - 인덱스 추가시
+      - 리프노드가 자리가 부족한 경우 루트 노드의 변경까지 이어질 수 있다.
+    - 인덱스 삭제시
+      - 삭제되었다고 마크해둔다.
+    - 인덱스 수정시
+      - 추가와 삭제 과정을 진행한다.
+    - 
 - Hash
     - 컬럼의 값으로 해시 값을 계산해서 인덱스
     - 매우 빠른 검색속도
     - 값을 변형해서 인덱싱하므로 값의 일부만으로 검색 할 때는 hash를 사용할 수 없다.
     - 부등호 연산의 경우 문제가 발생한다.
 
-### Clustered Index
-- 비슷한 값들을 물리적으로 인접한 장소에 저장되어 있는 데이터
-- 테이블의 프라이머리 키에만 해당되는 내용
-- PK가 변경되면 레코드의 물리적인 위치도 변경이 되어야 함
-- insert, delete 연산이 많은 경우 물리적으로 행을 재배열 해줘야하기 때문에 부적절하다.
+## Clustered Index & Non-Clustered Index
 
-### Composite Index
+![clustered_index.png](static/clustered_index.png)
+
+### Clustered Index
+
+- 인덱스를 걸었을 때 가장 효율적일 것 같은 컬럼을 clustered index로 지정
+- 테이블 생성시 자동으로 PK를 기준으로 생성됨
+- 비슷한 값들을 물리적으로 인접한 장소에 저장되어 있는 데이터
+    - 데이터 삽입, 수정, 삭제시 재배열 해줌
+- 테이블 당 1개만 생성 가능
+- 검색 속도는 non-clustered index보다 빠르지만 삽입, 수정, 삭제는 더 느리다.
+  - 값이 변경되면 레코드의 물리적인 위치도 변경이 되어야 함
+
+
+### Non-Clustered Index
+
+- 테이블당 여러개 생성 가능
+- 테이블의 데이터를 지정된 컬럼에 대해 물리적으로 재배열 안 함
+    - 단지 지정된 컬럼에 대해 정렬시킨 인덱스를 만듦 (테이블의 데이터는 그대로)
+- 검색 속도는 clustered index보다 느리지만 삽입, 수정, 삭제는 더 빠르다.
+
+
+## Composite Index
 - title, author에 index를 주고 title로 검색하는 것은 인덱스를 탈 수 있으나, author로 검색하는 것은 index를 타지 않게 된다.
+  - [composite_index](static/composite_index.webp)
+  - 데이터 내부적으로 main index를 저장하고, secondary, tertiary index를 pointer로 가리키고 있음
+  - 따라서 (name, age, address)로 인덱스가 걸려 있을 때에, (name) 혹은 (name, age) 혹은 (name, age, address)로는 검색할 수 있으나 age, address 만으로는 인덱스를 태울 수 없다.
+  - main index에 접근하지 않으면 해당 인덱스에 접근할 수 없기 때문이다.
 - 어떻게 쿼리할 것인지에 따라서 index를 잘 세워야 한다.
 
-### 성능
+![composite_index.png](static/composite_index.png)
+
+- index와 동일하게 정렬된 테이블의 포인터를 저장
+- composite index는 추가로 다른 컬럼의 정렬된 포인터도 저장
+- 데이터를 더 빠르게 이동할 수 있기 때문에 일반 index보다 더 많이 쿼리 시간을 줄일 수 있다.
+- 최대 32개의 컬럼의 데이터를 저장하는 인덱스
+- 인덱스 구조로 인해 인덱스를 거는 컬럼의 순서가 매우 중요하다.
+- 위 이미지에서 year, make, model 순으로 composite index를 생성하면, year index는 make에 대한 주소를, make index는 model에 대한 주소를 가지고 있게 된다.
+- 이러한 포인터 순서 때문에 보조 인덱스에 참조하고 위해서는 주 인덱스를 통해 수행해야한다.
+- 즉 year, (year, make), (year, make, model)로만 인덱스를 이용하여 쿼리할 수 있다.
+- 카디널리티가 높은순에서 낮은 순으로 정렬하는 것이 유리하다.
+    - 카디널리티: 해당 컬럼의 중복된 수치, 높을수록 겹치지 않는다.
+    - 카디널리티가 높을 수록 더 많은 데이터를 거를 수 있기 때문에 카디널리티가 높은 컬럼에 인덱스를 걸어야한다.
+
+## Boolean Index
+PostgreSQL은 그 방법이 더 저렴하다고 판단될 때만 인덱스를 사용한다. 오직 2가지의 값밖에 가지지 못하는 boolean 컬럼의 인덱스는 거의 사용되지 않을 것이다. 테이블의 높은 비율이 검색되어야 하는 경우 인덱스와 테이블에 랜덤 I/O를 사용하는 것보다 전체 테이블을 순차적으로 읽는 것이 더 저렴하기 때문이다.
+
+테이블의 더 적은 부분을 차지하는 값이 True라면 True인 경우에만 partial index를 걸어주면 된다.
+
+
+## GIN (Generalized Inverted Index)
+- B-tree 인덱스는 컬럼의 값을 변형하지 않고 그대로 사용
+- 따라서 일치 비교의 경우는 효과적이나, `like '%keyword%'` 연산과 같이 포함여부를 확인하는 것에는 적용되기 어렵다.
+- GIN의 경우 인덱스를 적용하는 컬럼의 값을 일정한 규칙에 따라 쪼개고 이 요소들을 사용한다.
+    - array_ops, tsvector_ops, jsonb_ops, jsonb_path_ops 등 여러가지 기준으로 쪼갤 수 있다.
+- GIN Index만 걸려있는 컬럼에 `=` 연산을 하는 경우 Full Scan이 일어나 효과가 없으나 `like '%keyword%'` 연산의 경우 효과적으로 동작
+
+## Elasticsearch Inverted Index
+![string_match.png](static/string_match.png)
+- RDBMS에서 문자열 검색시 like 검색을 이용하면 row 안의 내용을 모두 읽어 포함되는 여부를 확인해야 하기 때문에 속도가 느리다.
+
+![es_inverted_index.png](static/es_inverted_index.png)
+
+- 문자열을 쪼갠 후 각 키워드들이 포함된 도큐먼트 id를 가지고 있는다.
+- 데이터가 늘어나도 찾아야 하는 행이 늘어나는 것이 아니라 id의 배열값이 늘어나는 것이기 때문에 빠른 속도를 유지할 수 있다.
+
+## 성능
 
 인덱스 생성시 쓰기 작업에 별도의 과정이 추가된다.
 따라서 인덱스가 많다고 해서 빨라지는 것은 아니다.
@@ -46,6 +109,7 @@
     - row 수는 그대로이기 때문에 허수 데이터가 많이 존재할 수 있음
 - update의 경우 이전 데이터가 삭제되고 그 자리에 새 데이터가 들어오는 것이기 때문에 insert와 delete의 문제점을 모두 가지고 있다.
 - index 를 저장하기 위한 저장공간도 소모된다.
+
 
 # Join
 - 두 개 이상의 테이블을 하나의 집합으로 만드는 연산
@@ -71,7 +135,7 @@
 - 두 개의 테이블에 인덱스가 없는 상황에서 join 하는 경우
     - 두 테이블 중 범위가 좁을 테이블을 메모리로 가져온다.
     - join 조건 칼럼의 데이터를 hash 함수에 넣어서 나온 hash value를 Hash table에 저장한다.
-    - 후행 테이블의 join 조건을 has 함수에 넣어서 나온 hash value를 선행 테이블의 hash table 값과 비교하여 같은 값이 있으면 해당 칼럼의 값을 매칭
+    - 후행 테이블의 join 조건을 hash 함수에 넣어서 나온 hash value를 선행 테이블의 hash table 값과 비교하여 같은 값이 있으면 해당 칼럼의 값을 매칭
 
 ### Sort-Merge vs Hash Join
 - 둘 다 모든 테이블을 읽는다.
@@ -240,6 +304,16 @@ AWS에서 mysql, postresql 을 호환해서 만든 RDBMS
 - 관리 주체
     - rds의 경우 mysql, postgresql의 버전을 직접 관리하지만
     - 오로라는 aws가 개발해서 버전 업그레이드를 주기적으로 해준다.
+
+
+# MySQL vs PostgreSQL
+
+- MySQL은 REPETABLE READ의 트랜잭션 격리 수준을 default로 이용하고 있고, PostgreSQL은 READ COMMITTED를 default로 이용하고 있다.
+- MySQL은 DDL이 트랜잭션 안에서 수행되더라도 rollback 되지 않지만, PostgreSQL은 가능하다.
+- PostgreSQL은 업데이트시 기존 데이터를 삭제하고 새로운 행을 추가해서 업데이트가 느리지만, MySQL은 비교적 빠르다.
+- MySQL은 Nested Loop Join만 제공하지만, PostgreSQL은 Nested Loop Join, Sorted Merge Join, Hash Join을 제공한다.
+- MySQL은 DDL이 non-blocking으로 동작하지만 PostgreSQL은 blocking하다.
+- PostgreSQL은 데이터가 삭제되거나 업데이트 되어도 남아있기 때문에 vacuum을 통해 주기적으로 디스크를 정리해주어야 한다.
 
 ## 참고 자료
 

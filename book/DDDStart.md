@@ -7,7 +7,7 @@
 - 하나의 도메인은 다시 하위 도메인으로 나눌 수 있다.
     - ex. “온라인 서점”의 경우 아래와 같이 나눌 수 있다.
 
-    ![domain](/static/domain_example.jpeg)
+    ![domain](./static/domain_example.jpeg)
 
 - 소프트웨어가 도메인의 모든 기능을 제공하지는 않는다. 배송, 결제와 같은 도메인의 경우에는 대행 업체를 이용해서 처리할 수 있다.
 - 하위 도메인의 구성은 상황에 따라 달라진다.
@@ -158,7 +158,7 @@
 
 - 네 영역으로 아키텍쳐를 구성할 때에는 아래와 같은 계층 구조를 따른다.
 
-![Hierarcy Architecture](/static/hierarchy_architecture.jpeg)
+![Hierarcy Architecture](./static/hierarchy_architecture.jpeg)
 
 - 상위 계층에서 하위 계층으로의 의존만 존재하고 하위 계층은 상위 계층에 의존 x
     - ex) 표현 계층은 응용 계층에 의존하지만 인프라스트럭처 계층은 도메인 계층에 의존하지 않는다.
@@ -173,7 +173,7 @@
 
 ## DIP (Dependency Inversion Principle)
 
-![DIP example](/static/dip_example.jpeg)
+![DIP example](./static/dip_example.jpeg)
 
 - 추상화 시킨 인터페이스를 이용하여 저수준 모듈이 고수준 모듈에 의존하도록 바꾼다.
 - 고수준 모듈 (Service 등) 입장에서 저수준 모듈이 어떻게 구현되었는지는 중요하지 않다.
@@ -242,7 +242,7 @@
 
 ## 요청 처리 흐름
 
-![request flow](/static/request_flow.jpeg)
+![request flow](./static/request_flow.jpeg)
 
 ## 인프라스트럭처 개요
 
@@ -300,7 +300,7 @@
 
 ## 애그리거트
 
-![aggregate graph](/static/aggregate_graph.jpg)
+![aggregate graph](./static/aggregate_graph.jpg)
 
 - 관련된 객체를 하나의 군으로 묶어주는 역할
     - 도메인 모델의 관계를 이해하는데 도움을 주어 상위 수준의 개념 파악과 코드 변경에 도움을 준다.
@@ -621,7 +621,7 @@
 
 ## 비선점 잠금 (낙관적 잠금, Optimistic Lock)
 
-![optimistic_lock](/static/optimistic_lock.heic)
+![optimistic_lock](./static/optimistic_lock.heic)
 
 - 선점 잠금으로 모든 트랜잭션 충돌 문제가 해결되지 않는다.
     - 운영자가 배송지 정보를 조회하고 배송 상태로 변경하는 사이에 고객이 배송지를 변경하면 문제가 발생한다.
@@ -643,7 +643,7 @@
 
 ## 오프라인 선점 잠금
 
-![offline_lock](/static/offline_lock.heic)
+![offline_lock](./static/offline_lock.heic)
 
 - 동시에 여러 사용자가 특정 화면을 사용할 수 없도록 하기 위한 방법
 - 여러 트랜잭션에 걸쳐 동시 변경을 막는다.

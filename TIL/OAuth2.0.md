@@ -33,7 +33,7 @@ e.g.) 페이스북 인증 서버
 
 1. Authorization Code
 
-  ![code flow](static/oauth2_authorization_code_flow.png)
+  ![code flow](./static/oauth2_authorization_code_flow.png)
 
   `authorization code`는 client와 resource owner 사이에 인증서버를 중개자로 사용하여 얻는 방식
   resource owner에게 직접 인증을 요청하는 대신, client는 resource owner를 인증서버로 보내고, 
@@ -57,7 +57,7 @@ e.g.) 페이스북 인증 서버
 
 1. Implicit
 
-  ![implicit flow](static/oauth2_implict_flow.png)
+  ![implicit flow](./static/oauth2_implict_flow.png)
 
   `Implicit` 부여 방식은 javscript와 같은 script 언어를 통해 브라우저에 구현된 client를 위해 최적화 된 간단한 `authorization code` 방식이다.
   `Implicit` 방식에서는 client 에게 인증 코드를 발급하는 대신에, 클라이언트는 곧바로 액세스 토큰을 발급받는다.
@@ -70,7 +70,7 @@ e.g.) 페이스북 인증 서버
 
 1. Resource Owner Password Credentials
 
-  ![password flow](static/oauth2_password_flow.png)
+  ![password flow](./static/oauth2_password_flow.png)
 
   resource owner 암호 인증 정보(i.e., username and password)를 액세스 토큰을 얻기 위한 권한 부여로 직접 사용 할 수 있다.
   인증정보는 오직 그들이 resource owner와 client간에 신뢰도가 높고(client가 기기의 운영체제거나 권한이 높은 운영프로그램)와 다른 권한 부여 방식이 이용 불가능 할 때에만 사용해야한다.
@@ -80,7 +80,7 @@ e.g.) 페이스북 인증 서버
 
 1. Client Credentials
 
-  ![client flow](static/oauth2_client_credentials_flow.png)
+  ![client flow](./static/oauth2_client_credentials_flow.png)
 
   권한 부여 범위가 클라이언트가 제어하는 보호된 리소스 또는 권한 부여 서버에서 이전에 준비한 보호된 리소스로 제한될 때 클라이언트 인증 정보(또는 다른 형식의 클라이언트 인증)를 권한 부여로 사용할 수 있다.
   클라이언트 자격 증명은 일반적으로 클라이언트가 자체 작업을 수행하거나(클라이언트는 리소스 소유자이기도 함) 권한 부여 서버에서 이전에 할당한 권한에 따라 보호된 리소스에 대한 액세스를 요청할 때 권한 부여로 사용됩니다.

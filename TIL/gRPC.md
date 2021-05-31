@@ -7,7 +7,7 @@
     - 클라이언트 - 서버 간의 커뮤니케이션에 필요한 상세한 정보는 최대한 감추고,
     - 개발자는 각 로직에만 집중할 수 있도록 클라이언트/서버는 일반 메소드를 호출하는 것처럼 개발 진행하면 됨
 
-![rpc mechanism](static/rpc_mechanism.png)
+![rpc mechanism](./static/rpc_mechanism.png)
 
 - caller/callee
     - 개발자가 필요한 비즈니스 로직을 생성하고 정의된 IDL (interface definition language)로 작성하여 stub을 호출

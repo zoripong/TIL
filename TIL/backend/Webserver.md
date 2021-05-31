@@ -21,13 +21,13 @@ Gunicorn, uWSGI, Gevent, ASGI(Async) 등을 WSGI Container로 이용할 수 있�
         - 실행중인 프로세스를 복제하여 처리
         - 각 프로세스는 한 번에 한 연결만 처리하고 요청량이 많아질수록 프로세스는 증가하지만 개별적인 메모리 영역을 가지고 있어 안정적이다.
 
-        ![apache_prefork_mpm.png](static/apache_prefork_mpm.png)
+        ![apache_prefork_mpm.png](./static/apache_prefork_mpm.png)
 
     - Worker MPM
         - 1개의 프로세스가 각각 여러 쓰레드를 사용하는 방식
         - PreFork방식보다 메모리 사용량이 적음
 
-        ![apache_worker_mpm.png](static/apache_worker_mpm.png)
+        ![apache_worker_mpm.png](./static/apache_worker_mpm.png)
 
 ## Nginx
 

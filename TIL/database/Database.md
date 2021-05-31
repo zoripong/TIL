@@ -33,7 +33,7 @@
 
 ## Clustered Index & Non-Clustered Index
 
-![clustered_index.png](static/clustered_index.png)
+![clustered_index.png](./static/clustered_index.png)
 
 ### Clustered Index
 
@@ -56,13 +56,13 @@
 
 ## Composite Index
 - title, author에 index를 주고 title로 검색하는 것은 인덱스를 탈 수 있으나, author로 검색하는 것은 index를 타지 않게 된다.
-  - [composite_index](static/composite_index.webp)
+  - [composite_index](./static/composite_index.webp)
   - 데이터 내부적으로 main index를 저장하고, secondary, tertiary index를 pointer로 가리키고 있음
   - 따라서 (name, age, address)로 인덱스가 걸려 있을 때에, (name) 혹은 (name, age) 혹은 (name, age, address)로는 검색할 수 있으나 age, address 만으로는 인덱스를 태울 수 없다.
   - main index에 접근하지 않으면 해당 인덱스에 접근할 수 없기 때문이다.
 - 어떻게 쿼리할 것인지에 따라서 index를 잘 세워야 한다.
 
-![composite_index.png](static/composite_index.png)
+![composite_index.png](./static/composite_index.png)
 
 - index와 동일하게 정렬된 테이블의 포인터를 저장
 - composite index는 추가로 다른 컬럼의 정렬된 포인터도 저장
@@ -90,10 +90,10 @@ PostgreSQL은 그 방법이 더 저렴하다고 판단될 때만 인덱스를 �
 - GIN Index만 걸려있는 컬럼에 `=` 연산을 하는 경우 Full Scan이 일어나 효과가 없으나 `like '%keyword%'` 연산의 경우 효과적으로 동작
 
 ## Elasticsearch Inverted Index
-![string_match.png](static/string_match.png)
+![string_match.png](./static/string_match.png)
 - RDBMS에서 문자열 검색시 like 검색을 이용하면 row 안의 내용을 모두 읽어 포함되는 여부를 확인해야 하기 때문에 속도가 느리다.
 
-![es_inverted_index.png](static/es_inverted_index.png)
+![es_inverted_index.png](./static/es_inverted_index.png)
 
 - 문자열을 쪼갠 후 각 키워드들이 포함된 도큐먼트 id를 가지고 있는다.
 - 데이터가 늘어나도 찾아야 하는 행이 늘어나는 것이 아니라 id의 배열값이 늘어나는 것이기 때문에 빠른 속도를 유지할 수 있다.
@@ -229,7 +229,7 @@ DB 커넥션 개수가 제한적이기 때문에, 트랜잭션의 범위는 최�
 
 ## 수평 파티셔닝 (= 샤딩)
 
-![horizontal partitioning](static/horizontal_partitioning.png)
+![horizontal partitioning](./static/horizontal_partitioning.png)
 
 - 동일한 스키마를 가진 테이블을 여러개로 복제
 - 각각의 샤드에 어떤 데이터가 저장될지를 샤드키를 기준으로 분리 한다.
@@ -237,7 +237,7 @@ DB 커넥션 개수가 제한적이기 때문에, 트랜잭션의 범위는 최�
 
 ## 수직 파티셔닝
 
-![vertical partitioning](static/vertical_partitioning.png)
+![vertical partitioning](./static/vertical_partitioning.png)
 
 - 하나의 테이블에 저장된 데이터들을 여러 테이블로 분리하는 것
 
@@ -291,7 +291,7 @@ AWS에서 mysql, postresql 을 호환해서 만든 RDBMS
 
 ## RDS vs Aurora
 
-![aurora](static/aurora.png)
+![aurora](./static/aurora.png)
 
 - 스토리지
     - rds의 경우 EBS로 데이터를 쌓고 미러링하여 replica에 복제

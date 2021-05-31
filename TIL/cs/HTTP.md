@@ -26,11 +26,11 @@
 
 # UDP vs TCP
 
-![udp vs tcp](static/udp_vs_tcp.png)
+![udp vs tcp](./static/udp_vs_tcp.png)
 
 # HTTP 버전별 차이
 
-[HTTP 버전별 차이](HTTPVersion.md)
+[HTTP 버전별 차이](./HTTPVersion.md)
 
 # RESTful API
 

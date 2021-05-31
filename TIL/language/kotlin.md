@@ -18,7 +18,7 @@
 - 클래스의 모든 인스턴스가 공유하는 객체를 만들 때 사용
 - 클래스당 한 개만 가질 수 있음
 
-![companion_object.png](static/companion_object.png)
+![companion_object.png](./static/companion_object.png)
 
 - static으로 선언된 변수처럼 보이지만 런타임에 실제 인스턴스로 실행된다.
     - 인스턴스를 구현할 수 있다.

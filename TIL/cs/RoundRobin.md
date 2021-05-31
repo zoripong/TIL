@@ -26,6 +26,6 @@ CPU에게 할당된 총 프로세스들의 작업 시간을 여러 개로 쪼갠
 
 각 프로세스는 할당된 시간만 실행한 후 우선순위가 맨 뒤로 밀려나간다.
 
-![round robin](static/round_robin.png)
+![round robin](./static/round_robin.png)
 
 A, B, C가 각각 20초 6초 4초가 걸린다고 할 때 위와 같이 동작하게 된다.

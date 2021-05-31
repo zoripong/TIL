@@ -13,4 +13,4 @@
 
 
 ## 읽은 책들
-- [DDD Start!](book/DDDStart.md)
+- [DDD Start!](/book/DDDStart.md)

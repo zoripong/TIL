@@ -1,6 +1,6 @@
 # 동시성과 병렬성
 
-![concurrent.png](static/concurrent.png)
+![concurrent.png](./static/concurrent.png)
 
 ## 동시성
 
@@ -26,7 +26,7 @@
 
 # **프로세스**
 
-![process.png](static/process.png)
+![process.png](./static/process.png)
 
 - 컴퓨터에서 연속적으로 실행되고 있는 컴퓨터 프로그램
 - 운영체제로부터 시스템 자원을 할당받는 작업의 단위
@@ -108,7 +108,7 @@
 
 # 병렬성 프로그래밍에서 발생할 수 있는 문제점
 
-![trouble_in_concurrent.png](static/trouble_in_concurrent.png)
+![trouble_in_concurrent.png](./static/trouble_in_concurrent.png)
 
 - CPU가 작업을 처리하기 위해서 RAM의 일부분을 CPU cache memory로 읽어들이고, 작업이 완료되면 역순으로 해당 과정을 거친다.
 - 적절한 시점에 CPU cache memory에서 RAM으로 쓰기 작업이 일어나는데, CPU가 캐시에 쓰기 작업을 수행했다고 해서 바로 RAM으로 쓰기 작업을 수행할 필요가 없다는 것이다.

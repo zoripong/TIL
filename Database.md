@@ -118,7 +118,7 @@ PostgreSQL은 그 방법이 더 저렴하다고 판단될 때만 인덱스를 �
 - 반복문과 유사한 형태
 - 반복문 외부에 있는 테이블을 선행 테이블 (Outer table), 내부에 있는 테이블을 후행 테이블 (Inner table)
 - 선행테이블의 row 수 만큼 join이 수행된다.
-    - 선행 테이블을 무엇으로 설정할 것인지 중요하다.
+    - row가 더 적은 테이블은 선행으로 두고, 인덱스가 걸려있는 테이블을 후행으로 두어 최적화 할 수 있다.
 - 선행 테이블의 row가 10개이고 후행 테이블의 row가 1억개이면 후행 테이블을 10억번을 읽어야한다.
     - 후행 테이블의 초반에 조건에 일치하는 데이터를 찾았다고 하더라도 1개만 있을거라는 보장이 없어서 모두 읽어야한다.
     - 인덱스와 함께 사용이 되어야 한다.
@@ -213,16 +213,15 @@ DB 커넥션 개수가 제한적이기 때문에, 트랜잭션의 범위는 최�
 - Non-Repeatable Read가 발생하지 않음
     - Non-Repeatable Read: 한 트랜잭션에서 같은 쿼리를 두 번 수행할 때, 두 쿼리의 결과가 상이하게 나타나는 비일관성 현상
 - UNDO 공간에 백업해두고 실제 레코드 값은 변경하며, 변경 전에 만들어진 트랜잭션에서는 UNDO 공간에 백업된 데이터를 가져온다.
-    - 백언된 데이터는 불필요시 주기적으로 삭제하며, 백업 레코드가 많아지면 성능 저하가 찾아올 수 있다.
+    - 백업된 데이터는 불필요시 주기적으로 삭제하며, 백업 레코드가 많아지면 성능 저하가 찾아올 수 있다.
 - 이러한 업데이트 방식을 MVCC (Mutli Version Concurrency Control)라고 부른다.
 
 #### Serializable (Level 3)
 - 가장 단순하지만 가장 엄격한 격리 수준으로 동시 처리 성능이 가장 낮다.
 - Phantom Read가 발생하지 않음
-    - Phantom Read: 한 트랜잭션에서 같은 쿼리를 두 번 수행할 때, 첫 번째 쿼리에서 없던 레코드가 두 번째 쿼리에서 나타나는 현상
-- 트랜잭션이 완료될 때까지 SELECT 문장이 사용하는 모든 데이터에 Shared Lock이 걸리는 Level
-- 완벽한 읽기 일관성 모드를 제공한다.
-
+    - Phantom Read: 하나의 트랜젝션에서 Update 명령이 유실되거나 덮어써지는 현상.update후 커밋하고 다시 조회했는데, 다른 값이 보이거나 데이터가 없어진 경우
+- 동일한 행에 중복한 변경점이 생기면 두번째 쓰기 작업은 실패하게 된다.
+  - T1 에서 200으로 변경, T2에서 300으로 변경한 상태에서 T1이 commit되면, T2는 실패
 
 # 파티셔닝
 
@@ -314,6 +313,40 @@ AWS에서 mysql, postresql 을 호환해서 만든 RDBMS
 - MySQL은 Nested Loop Join만 제공하지만, PostgreSQL은 Nested Loop Join, Sorted Merge Join, Hash Join을 제공한다.
 - MySQL은 DDL이 non-blocking으로 동작하지만 PostgreSQL은 blocking하다.
 - PostgreSQL은 데이터가 삭제되거나 업데이트 되어도 남아있기 때문에 vacuum을 통해 주기적으로 디스크를 정리해주어야 한다.
+
+# Explicit Locking - Row-level locks
+
+## For Update
+FK가 걸려있는 테이블들도 모두 lock이 걸림
+purchase 테이블과 User 테이블이 FK로 걸려있고, purchase에 `For Update`로 쿼리하게 되면 이 트랜잭션이 끝날 때까지 다른 트랜잭션은 연결되어있는 User테이블의 row도 조회할 수 없음
+
+### For Update
+- lock을 걸어서 다른 트랜잭션이 block됨
+- 사용하고 있던 A 트랜잭션이 끝나야 B가 작업할 수 있음
+- read, update 뿐만 아니라 select for update 구문까지 막음
+
+### For Update No Wait
+- A가 사용하고 있어도 기다리지 않고 접근
+- 그러나 A가 사용하고 있다면 에러가 발생
+
+### For Update Skip Locked
+- lock 걸려 있는 것 제외하고 조회
+
+## For Share
+- For Update의 약한 형태
+- lock이 걸려있는 데이터를 update, delete 할 수는 없지만, select for share를 통한 접근은 가능
+
+
+## select for no key updates
+- selef for update와 유사하게 동작하지만, select for share를 block하지 않음
+
+## select for key share.
+- lock clause 중에 가장 약한 것
+- select for share와 비슷하게 동작
+- delete는 막아주지만, key 값을 수정하지 않는 update는 허용
+
+https://www.notion.so/yool/Selecting-for-Share-and-Update-in-PostgreSQL-398163e93abf4166b51e91be86ccc68b
+
 
 ## 참고 자료
 

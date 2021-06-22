@@ -1,13 +1,3 @@
-# wsgi
-
-웹 어플리케이션 (Flask)가 웹서버 (아파치, nginx 등)과 통신할 수 있도록 하는 middleware
-
-> [While lightweight and easy to use, Flask’s built-in server is not suitable for production as it doesn’t scale well.](https://flask.palletsprojects.com/en/1.1.x/deploying/)
-
-플라스크 빌트인 서버가 있어서 wsgi를 사용하지 않고 배포할 수 있지만, 확장이 잘 되지 않아 production 환경에는 알맞지 않다.
-
-Gunicorn, uWSGI, Gevent, ASGI(Async) 등을 WSGI Container로 이용할 수 있다.
-
 # Webserver
 
 - HTTP 프로토콜을 통해 읽힐 수 있는 문서를 처리하며 일반적으로 웹 어플리케이션의 앞단에 배치된다.

@@ -24,7 +24,7 @@
 
 ### **Choreography-Based Saga**
 
-![choreography_saga.png](./static/choreography_saga.png)
+![choreography_saga.png](/static/TIL/backend/choreography_saga.png)
 
 - 각 애플리케이션은 로컬 트랜잭션을 마치고 트랜잭션 완료 이벤트를 다음 애플리케이션에 전달
 - 일부 실패한 경우에는 롤백 이벤트를 이전 애플리케이션에 전달
@@ -38,7 +38,7 @@
 
 ### **Orchestraion-Based Saga**
 
-![orchestration_saga.png](./static/orchestration_saga.png)
+![orchestration_saga.png](/static/TIL/backend/orchestration_saga.png)
 
 - 트랜잭션 처리를 위한 Saga 인스턴스가 별도로 존재
 - 트랜잭션에 관여된 모든 App은 Manager에 의해 점진적으로 트랜잭션을 수행하고 Manager에게 전달

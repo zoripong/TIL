@@ -13,7 +13,7 @@
 
 ## k8s Components
 
-[k8s diagram](./static/k8s_cluster_diagram.svg)
+[k8s diagram](/static/TIL/infra/k8s_cluster_diagram.svg)
 
 ### 컨트롤 플레인
 - 클러스터에 관한 전반적인 결정을 수행

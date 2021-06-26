@@ -69,9 +69,9 @@ ex) k8s 에서 replica 수를 늘리는 것 or HPA
 
 ## L4 로드밸런서와 L7로드밸런서
 
-![L4 Loadbalancer](./static/l4_lb.png)
+![L4 Loadbalancer](/static/TIL/backend/l4_lb.png)
 
-![L7 Loadbalancer](./static/l7_lb.png)
+![L7 Loadbalancer](/static/TIL/backend/l7_lb.png)
 
 L4부터 포트를 바탕으로 로드를 분산하는 것이 가능해서 L4 로드밸런서와 L7 로드밸런서가 가장 많이 사용됨
 
@@ -81,7 +81,7 @@ L4 로드밸런서는 네트워크 계층(IP)나 트랜스포트 계층 (TCP, UD
 
 L7 로드밸런서의 경우 애플리케이션 계층 (HTTP, FTP, SMTP)에서 로드를 분산하기 때문에 헤더, 쿠키 등과 같은 사용자의 요청을 기준으로 특정 서버에 트래픽 분산을 할 수 있음 (패킷 내용을 확인)
 
-![L4 vs L7](./static/l4_vs_l7.png)
+![L4 vs L7](/static/TIL/backend/l4_vs_l7.png)
 
 # 캐싱
 
@@ -100,13 +100,13 @@ L7 로드밸런서의 경우 애플리케이션 계층 (HTTP, FTP, SMTP)에서 �
 
 # MSA
 
-[Monolithic, MSA, SOA](MicroServiceArchitecture.md) 
+[Monolithic, MSA, SOA](msa.md) 
 
 MSA를 이용하여 요청을 분산시킬 수 있다.
 
 # DB Replication
 
-[database](Database.md) 
+[database](/TIL/database/database.md) 
 
 많은 요청으로 인해 DB에 부하가 생기는 경우 database replication을 통해 부하를 분산시킬 수 있다.
 

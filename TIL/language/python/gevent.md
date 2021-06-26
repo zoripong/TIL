@@ -124,7 +124,5 @@ I/O가 긴 것과 CPU가 많이 드는 것이 섞여 있으면 안 됨
 - monkey patch는 악이지만, 이런 경우 필요악이다.
 
 
-—
-
 [https://shifu-oh.tistory.com/10](https://shifu-oh.tistory.com/10)
 [https://medium.com/@Pinterest_Engineering/how-we-use-gevent-to-go-fast-e30fa9f81334](https://medium.com/@Pinterest_Engineering/how-we-use-gevent-to-go-fast-e30fa9f81334)

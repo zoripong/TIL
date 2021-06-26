@@ -46,18 +46,18 @@ For high availability we recommend clustering multiple RabbitMQ brokers within a
 
 ## 왜 새로운 복제 큐 타입을 제공하는가?
 
-![mirrored_queue](./static/mirrored_queue1.png)
+![mirrored_queue](/static/TIL/backend/rabbitmq/mirrored_queue1.png)
 
 - Mirrored queue는 원래 Chained Replication이라고 불리는 알고리즘을 기반에 동작하고 있었다.
 - 모든 메시지는 리더인 마스터큐로 부터 publish 되고 consumed 되며, 리더는 근접한 mirror 큐에 복제하고, 이 mirror는 다시 근접한 큐에 복제를 한다.
 - 이 복제는 마지막 큐가 리더에게 완전히 복제가 완료되었다고 알리기까지 반복된다.
 
-![mirrored_queue](./static/mirrored_queue2.png)
+![mirrored_queue](/static/TIL/backend/rabbitmq/mirrored_queue2.png)
 
 - 그러나 몇가지 엣지 케이스로 인해서 생산된 메시지가 손실이 되는 문제가 발생하여 채널이 메시지를 처리할 때 리더뿐만아니라 각각의 Mirror 큐에도 직접적으로 보내주도록 변경되었다.
 - 안타깝게도 이 방법은 브로커가 publisher로부터 각각의 메시지를 2번 받는 다는 것을 의미하고, 2배의 네트워크 부하가 발생한다.
 
-![mirrored_queue](./static/mirrored_queue3.png)
+![mirrored_queue](/static/TIL/backend/rabbitmq/mirrored_queue3.png)
 
 - 그리고 mirror 큐가 장애로 인해 이 순환을 벗어나게 되는 경우에도 문제가 있다.
 - 특정 mirror가 특정 타임 리밋을 넘겨 통신에 실패하게 된 경우 이 큐는 링으로부터 제거 되고 큐는 계속해서 가용가능한 상태로 남아있게 된다.
@@ -68,7 +68,7 @@ For high availability we recommend clustering multiple RabbitMQ brokers within a
     - 이것은 큐의 사용 불가 기간이 길수 있어서 큐가 클 경우 문제가 발생한다.
 - 동기화를 하지 않는 방법은 동기화의 문제는 해결할 수 있지만 데이터의 중복성이 떨어진다.
 
-![mirrored_queue](./static/mirrored_queue4.png)
+![mirrored_queue](/static/TIL/backend/rabbitmq/mirrored_queue4.png)
 
 - 다른 중요한 토픽은 네트워크 partition 상황을 핸들링하는 것에 대한 것이다.
 - 네트워크 partion이 발생하였을 때 클러스터는 두개로 나뉘어지고 우리는 마스터와의 연결이 끊긴 mirror를 갖게 된다.
@@ -79,7 +79,7 @@ For high availability we recommend clustering multiple RabbitMQ brokers within a
     - 네트워크 문제가 해결되었을 때 클러스터는 다시 정상으로 돌아온다.
     - 이 방법은 적은 중복성이라고 할지라도 가용성을 두고 일관성을 선택하는 전략이다.
 
-![mirrored_queue](./static/mirrored_queue5.png)
+![mirrored_queue](/static/TIL/backend/rabbitmq/mirrored_queue5.png)
 
 - 만약 양쪽 partition의 가용성을 계속해나가고 싶다면 우리는 ignore 혹은 auto-heal 모드를 선택할 수 있다.
 - 이것은 미러가 마스터로 승격하는 것을 허용하며, 이것은 양쪽 파티션에 마스터가 생긴다는 것을 의미한다.
@@ -91,7 +91,7 @@ For high availability we recommend clustering multiple RabbitMQ brokers within a
 
 # Quorum Queues
 
-![quorum_queue](./static/quorum_queue.png)
+![quorum_queue](/static/TIL/backend/rabbitmq/quorum_queue.png)
 
 Quorum Queues는 mirrored queues에서 사용한 chained 알고리즘을 사용하지 않는다.
 

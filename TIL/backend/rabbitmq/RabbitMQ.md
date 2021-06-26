@@ -6,7 +6,7 @@
 
 # Core Concept
 
-![rabbitmq_core_concept.png](./static/rabbitmq_core_concept.png)
+![rabbitmq_core_concept.png](/static/TIL/backend/rabbitmq/rabbitmq_core_concept.png)
 
 ## Producer
 
@@ -31,7 +31,7 @@
 
 ### Direct
 
-![rabbitmq_exchange_direct.png](./static/rabbitmq_exchange_direct.png)
+![rabbitmq_exchange_direct.png](/static/TIL/backend/rabbitmq/rabbitmq_exchange_direct.png)
 
 - Routing key가 정확히 일치하는 Queue에게 메시지 전송
 - 하나의 큐에 여러 개의 라우팅 키를 지정할 수 있음
@@ -39,21 +39,21 @@
 
 ### Topic
 
-![rabbitmq_exchange_topic.png](./static/rabbitmq_exchange_topic.png)
+![rabbitmq_exchange_topic.png](/static/TIL/backend/rabbitmq/rabbitmq_exchange_topic.png)
 
 - Routing key 패턴이 일치하는 Queue에게 메시지 전송
 - 여러개의 패턴이 일치하더라도 하나의 큐에는 메시지가 하나만 전달이 된다.
 
 ### Headers
 
-![rabbitmq_exchange_headers.png](./static/rabbitmq_exchange_headers.png)
+![rabbitmq_exchange_headers.png](/static/TIL/backend/rabbitmq/rabbitmq_exchange_headers.png)
 
 - [key: value] 로 이루어진 header값을 기준으로 일치하는 Queue에 메시지 전송
 - topic과 유사하지만 header를 사용
 
 ### Fanout
 
-![rabbitmq_exchange_fanout.png](./static/rabbitmq_exchange_fanout.png)
+![rabbitmq_exchange_fanout.png](/static/TIL/backend/rabbitmq/rabbitmq_exchange_fanout.png)
 
 - 해당 Exchange에 등록된 모든 Queue에 메시지 전송
 

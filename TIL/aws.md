@@ -1,5 +1,5 @@
 ## AWS region의 중요성
-![response time per region](./static/aws_region.png)
+![response time per region](/static/TIL/aws_region.png)
 
 - 물리적인 위치에 따라 latency 차이가 크게 달라진다.
 - 실제로 가까운 지역의 경우 훨씬 빠른 응답을 해준다.

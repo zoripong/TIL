@@ -62,7 +62,7 @@
   - main index에 접근하지 않으면 해당 인덱스에 접근할 수 없기 때문이다.
 - 어떻게 쿼리할 것인지에 따라서 index를 잘 세워야 한다.
 
-![composite_index.png](./static/TIL/database/composite_index.png)
+![composite_index.png](/static/TIL/database/composite_index.png)
 
 - index와 동일하게 정렬된 테이블의 포인터를 저장
 - composite index는 추가로 다른 컬럼의 정렬된 포인터도 저장

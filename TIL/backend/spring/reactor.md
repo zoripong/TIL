@@ -37,6 +37,15 @@ seq.subscribe(value -> System.out.println(value)); // Subscribe Flux
 - Mono.empty()는 ( --|--> )와 같은 시퀀스를 생성한다.
 
 
+- Mono -> Flux: flatMapMany 연산자
+- Flux -> Mono: reduce
+
+- 값을 꺼내서 Publisher로 바꿔줄 수 있는 연산자
+  - flatMap (리턴하는 Publisher가 비동기로 동작할 때 순서를 보장하지 않음)
+  - flatMapSequential (오는대로 구독하고 결과는 순서에 맞게 리턴)
+  - concatMap (인자로 지정된 함수에서 리턴하는 Publisher의 스트림이 다 끝난 후에 그 다음 넘어오는 값의 Publisher 스트림을 처리)
+
+
 # Publish and Subscribe
 
 ## Cold Sequence
@@ -84,4 +93,63 @@ Received2: 2
 - Subscription#request()를 통해 publisher에 데이터를 요청하지 않으면, next 신호가 발생하지 않는다.
 - request(Long.MAX_VALUE)를 사용하면 개수 제한 없이 publisher에 데이터를 요청하는 신호를 보낸다.
 
-https://javacan.tistory.com/entry/Reactor-Start-2-RS-just-generate
+# 시퀀스 변환
+
+## map
+- 한개의 데이터를 1:1 방식으로 변환시켜준다.
+- 동기 function을 적용하여 Mono에 의해 emit된 값을 변형
+
+## flatMap
+- 1개의 데이터로부터 시퀀스를 생성할 때 사용한다. (1:N)
+- flatMap에 전달한 함수가 생성하는 각 Flux는 하나의 시퀀스로 연결된다.
+  - flatMap에서 Flux<Integer>를 반환해도 결과값은 Flux<Flux<Integer>>가 아닌 Flux<Integer>이다.
+- Mono에 의해 비동기성으로 emit된 아이템을 다른 Mono 형태로 emit된 값으로 변형하여 반환한다.
+
+## filter
+- 시퀀스가 생성한 데이터를 걸러낼 수 있다.
+- filter에 전달한 함수 결과가 true인 데이터만 전달한다.
+
+## defaultIfEmpty
+- 시퀀스에 데이터가 없을 때 특정 **값**을 기본으로 사용하고자 할 때 사용한다.
+
+## swtichIfEmpty
+- 시퀀스에 값이 없을 때 다른 **시퀀스**를 사용하고자 할 때 사용한다.
+- defaultIfEmpty는 값을 지정하지만 switchIfEmpty는 시퀀스를 지정한다.
+
+## startWith
+- 시퀀스의 시작값을 지정해줄 수 있다.
+- 지정된 값이 시퀀스 앞에 붙게 된다.
+
+## concatWithValues
+- 시퀀스가 특정 값으로 끝나도록 지정할 수 있다.
+
+## concatWith
+- 여러 시퀀스를 연결할 수 있다.
+- 앞의 시퀀스가 끝나야 두번째로 연결된 시퀀스의 구독이 시작된다.
+  - seq1.concatWith(seq2).subscribe(System.out::Println) 인 경우 seq1이 종료된 후 seq2를 구독한다.
+
+## mergeWith
+- 여러 시퀀스를 연결할 수 있다.
+- concatWith는 시퀀스를 연결한 순서대로 구독하지만, mergeWith는 발생하는 데이터 순서대로 구독하게 된다.
+
+## zipWith
+
+[zipWith](/static/TIL/backend/spring/zipwith.png)
+
+- 두 시퀀스의 값을 묶어 하나의 쌍을 생성하는 시퀀스를 만들 수 있다.
+
+## combineLatest
+
+[combineLatest](/static/TIL/backend/spring/combine_latest.png)
+
+- 가장 최근 데이터를 기준으로 쌍을 만든다.
+
+## take
+
+- 지정한 개수만큼 유지할 때 사용한다.
+- Duration을 인자로 넘겨주는 경우 해당 시간동안 생성된 데이터를 유지해준다.
+
+## skip
+
+- 지정한 개수만큼 거르고 싶을 때 사용한다.
+- Duration을 인자로 넘겨주면 해당 시간동안 생성된 데이터를 걸러준다.

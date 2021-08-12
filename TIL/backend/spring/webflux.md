@@ -42,29 +42,6 @@
 - 언어 레벨에서 Event Loop를 돌면서 요청을 감지하고 적합한 Handler에게 위임
     - 개발자는 단순히 Listener 액션만 등록해주면 된다.
 
-
-### Reactor
-
-#### Mono와 Flux
-- Mono: 0-1개의 결과를 처리하기 위한 Reactor 객체
-- Flux: 0-N개의 결과를 처리하기 위한 Reactor 객체
-- Mono -> Flux: flatMapMany 연산자
-- Flux -> Mono: reduce
-
-- 값을 꺼내서 Publisher로 바꿔줄 수 있는 연산자
-  - flatMap (리턴하는 Publisher가 비동기로 동작할 때 순서를 보장하지 않음)
-  - flatMapSequential (오는대로 구독하고 결과는 순서에 맞게 리턴)
-  - concatMap (인자로 지정된 함수에서 리턴하는 Publisher의 스트림이 다 끝난 후에 그 다음 넘어오는 값의 Publisher 스트림을 처리)
-
-#### Map vs FlatMap
-
-- Map
-  - 동기 function을 적용하여 Mono에 의해 emit된 값을 변형
-- FlatMap
-  - Mono에 의해 비동기성으로 emit된 아이템을 다른 Mono 형태로 emit된 값으로 변형하여 반환한다.
-
-
-
 ## MVC vs WebFlux
 
 ![MVC_vs_Webflux.png](/static/TIL/backend/spring/MVC_vs_Webflux.png)

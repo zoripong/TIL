@@ -9,6 +9,8 @@
 
 - servelet stack
 - 다수의 요청이 들어오는 경우 Queue에 쌓이고 Thread Pool의 Thread들이 가져가 처리
+  - 즉, 요청당 하나의 Thread가 할당
+  - 요청이 완료될 때까지 Thread를 점유하게 됨
 - Thread Pool의 size보다 많은 요청이 들어오게 되면 Queue가 쌓이게 됨 (Thread Pool Hell)
 - 트래픽을 측정하여 Pool size를 조정해야 함
 
@@ -18,7 +20,7 @@
 
 - Event driven 방식
 - Reactor: JVM 위에서 동작하는 논블럭킹 애플리케이션을 만들기 위한 리액티브 라이브러리
-- Node.js처럼 이벤트 루프가 돌고 요청이 발생한 경우 그것에 맞는 핸들러에게 처리를 위임하고 처리가 완료되면 callback 메소드 등을 통해 응답을 반환 (non-blocking)
+- Node.js처럼 이벤트 루프가 돌고, 요청이 발생한 경우 그것에 맞는 핸들러에게 처리를 위임하고, 처리가 완료되면 callback 메소드 등을 통해 응답을 반환 (non-blocking)
 - 사용자 요청을 대량으로 받아낼 수 있음
 - 요청을 처리하는 파이프라인의 요소들이 **모두** 논블로킹하게 동작해야 유의미
     - 특정 구간에서 블로킹이 발생한다면 MVC와 동일한 문제들이 발생
@@ -49,7 +51,29 @@
 boot1 - MVC / boot2 - WebFlux
 
 - 사용자가 적을 때에는 유의미한 차이는 발생하지 않음
-- 동기방식이 코드작성, 이해, 디버깅이 더 쉽다고 함
+- 동기방식이 코드작성, 이해, 디버깅이 더 쉽고 직관적
+
+## Reactor Meltdown
+- 하나의 이벤트가 blocking 되면 event loop 전체가 blocking 되며 전체 성능 저하를 일으킴
+  - 하나의 요청 처리가 길어지면 다른 요청에도 성능 저하가 전파됨
+- 이유는, netty의 event loop 구조
+  - 동작 방식과 구조
+    - event loop는 이벤트가 발생하면 적절한 핸들러에게 전달
+    - event loop 하나에서 여러 채널을 모니터링
+        - 채널에서 발생하는 connect, accept, read, write 이벤트를 순차적으로 처리
+    - **싱글 스레드**로 동작
+    - 모든 이벤트는 Queue로 관리되며 FIFO 방식으로 처리
+  - 싱글스레드로 동작하기 때문에 하나의 채널에서 지연이 생기면 다른 채널에도 영향이 감
+- 예방책
+  - blocking 작업이 필요한 이벤트는 격리시켜야 한다.
+  - subscribeOn, publishOn을 통해 특정 스케쥴러에게 위임
+    - -> 이벤트 루프가 아닌 다른 스케쥴러가 처리하면서 안전해짐
+  - scheduler factory method 사용을 권장
+    - Schedulers.single()
+    - Schedulers.parellel()
+    - Schedulers.immediate()
+    - Schedulers.boundedElastic()
+      - reactor에서 긴 blocking 동작을 격리시키기 위해서 이 scheduler를 사용할 것을 권장함
 
 # Ref
 
